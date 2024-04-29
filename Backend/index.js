@@ -2,9 +2,11 @@ const connectToMongo = require("./db");
 const express = require("express");
 connectToMongo();
 const app = express();
-app.get("/", (req, res) => {
-  res.status(200).send("Welcome to world best mern series");
-});
+app.use(express.json());
+
+// available routes
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/notes", require("./routes/notes"));
 
 const port = 5000;
 app.listen(port, () => {
