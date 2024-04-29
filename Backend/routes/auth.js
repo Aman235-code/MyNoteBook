@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const fetchUser = require("../middleware/fetchUser");
 const JWT_SECRET = "jsutanormalstring$yeaa";
 
-// ROUTE 1:  Create a Using: POST "/api/auth/createuser", No Login Required
+// ROUTE 1:  Create an User Using: POST "/api/auth/createuser", No Login Required
 router.post("/createuser", async (req, res) => {
   try {
     let user = await User.findOne({ email: req.body.email });
