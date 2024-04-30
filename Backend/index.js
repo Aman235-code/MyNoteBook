@@ -10,5 +10,5 @@ app.use("/api/notes", require("./routes/notes"));
 
 const port = 5000;
 app.listen(port, () => {
-  console.log(`server is running at port ${port}`);
+  console.log(`MyNoteBook BE is listenng at port ${port}`);
 });
