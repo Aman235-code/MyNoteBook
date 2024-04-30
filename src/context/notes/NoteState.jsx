@@ -2,120 +2,71 @@ import NoteContext from "./NoteContext";
 import { useState } from "react";
 
 const NoteState = (props) => {
-  const notesInitial = [
-    {
-      _id: "662fd6b74d50fb91a5e1f3d4",
-      user: "662fc5428a8f2cfd7f66af8b",
-      title: "Bhalu Boy",
-      description: "Please wake up early",
-      tag: "Personal",
-      date: "2024-04-29T17:19:51.326Z",
-      __v: 0,
-    },
-    {
-      _id: "662fd6b74d50fb91a5e563yd4",
-      user: "662fg5628a8f2cfd7f66af8b",
-      title: "Bhalu Boy Yes Bhalu",
-      description: "Please wake up early and die",
-      tag: "Professional",
-      date: "2024-04-29T17:19:51.326Z",
-      __v: 0,
-    },
-    {
-      _id: "662fd6b74d50fb91a5e563yd4",
-      user: "662fg5628a8f2cfd7f66af8b",
-      title: "Bhalu Boy Yes Bhalu",
-      description: "Please wake up early and die",
-      tag: "Professional",
-      date: "2024-04-29T17:19:51.326Z",
-      __v: 0,
-    },
-    {
-      _id: "662fd6b74d50fb91a5e563yd4",
-      user: "662fg5628a8f2cfd7f66af8b",
-      title: "Bhalu Boy Yes Bhalu",
-      description: "Please wake up early and die",
-      tag: "Professional",
-      date: "2024-04-29T17:19:51.326Z",
-      __v: 0,
-    },
-    {
-      _id: "662fd6b74d50fb91a5e563yd4",
-      user: "662fg5628a8f2cfd7f66af8b",
-      title: "Bhalu Boy Yes Bhalu",
-      description: "Please wake up early and die",
-      tag: "Professional",
-      date: "2024-04-29T17:19:51.326Z",
-      __v: 0,
-    },
-    {
-      _id: "662fd6b74d50fb91a5e563yd4",
-      user: "662fg5628a8f2cfd7f66af8b",
-      title: "Bhalu Boy Yes Bhalu",
-      description: "Please wake up early and die",
-      tag: "Professional",
-      date: "2024-04-29T17:19:51.326Z",
-      __v: 0,
-    },
-    {
-      _id: "662fd6b74d50fb91a5e563yd4",
-      user: "662fg5628a8f2cfd7f66af8b",
-      title: "Bhalu Boy Yes Bhalu",
-      description: "Please wake up early and die",
-      tag: "Professional",
-      date: "2024-04-29T17:19:51.326Z",
-      __v: 0,
-    },
-    {
-      _id: "662fd6b74d50fb91a5e563yd4",
-      user: "662fg5628a8f2cfd7f66af8b",
-      title: "Bhalu Boy Yes Bhalu",
-      description: "Please wake up early and die",
-      tag: "Professional",
-      date: "2024-04-29T17:19:51.326Z",
-      __v: 0,
-    },
-    {
-      _id: "662fd6b74d50fb91a5e563yd4",
-      user: "662fg5628a8f2cfd7f66af8b",
-      title: "Bhalu Boy Yes Bhalu",
-      description: "Please wake up early and die",
-      tag: "Professional",
-      date: "2024-04-29T17:19:51.326Z",
-      __v: 0,
-    },
-    {
-      _id: "662fd6b74d50fb91a5e563yd4",
-      user: "662fg5628a8f2cfd7f66af8b",
-      title: "Bhalu Boy Yes Bhalu",
-      description: "Please wake up early and die",
-      tag: "Professional",
-      date: "2024-04-29T17:19:51.326Z",
-      __v: 0,
-    },
-    {
-      _id: "662fd6b74d50fb91a5e563yd4",
-      user: "662fg5628a8f2cfd7f66af8b",
-      title: "Bhalu Boy Yes Bhalu",
-      description: "Please wake up early and die",
-      tag: "Professional",
-      date: "2024-04-29T17:19:51.326Z",
-      __v: 0,
-    },
-    {
-      _id: "662fd6b74d50fb91a5e563yd4",
-      user: "662fg5628a8f2cfd7f66af8b",
-      title: "Bhalu Boy Yes Bhalu",
-      description: "Please wake up early and die",
-      tag: "Professional",
-      date: "2024-04-29T17:19:51.326Z",
-      __v: 0,
-    },
-  ];
+  const host = "http://localhost:5000";
+  const notesInitial = [];
 
   const [notes, setnotes] = useState(notesInitial);
+  // get all Notes
+  const getNotes = async () => {
+    const res = await fetch(`${host}/api/notes/fetchAllNotes`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYyZmM1NDI4YThmMmNmZDdmNjZhZjhiIn0sImlhdCI6MTcxNDQwOTc1NH0.9snMRSVA276ZzvrUD4bOHOD4I1VNJ-9yVur75ZBLsh4",
+      },
+    });
+    const json = await res.json();
+    setnotes(json);
+  };
+
+  // Add a Note
+  const addNote = async (title, description, tag) => {
+    const res = await fetch(`${host}/api/notes/addNote`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYyZmM1NDI4YThmMmNmZDdmNjZhZjhiIn0sImlhdCI6MTcxNDQwOTc1NH0.9snMRSVA276ZzvrUD4bOHOD4I1VNJ-9yVur75ZBLsh4",
+      },
+      body: JSON.stringify({ title, description, tag }),
+    });
+    const json = await res.json();
+    setnotes(notes.concat(json));
+  };
+
+  // Delete a Note
+  const deleteNote = async (id) => {
+    const res = await fetch(`${host}/api/notes/deleteNote/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYyZmM1NDI4YThmMmNmZDdmNjZhZjhiIn0sImlhdCI6MTcxNDQwOTc1NH0.9snMRSVA276ZzvrUD4bOHOD4I1VNJ-9yVur75ZBLsh4",
+      },
+    });
+    const json = await res.json();
+    setnotes(notes.concat(json));
+  };
+
+  // Edit a Note
+  const editNote = async (id, title, description, tag) => {
+    const res = await fetch(`${host}/api/notes/updateNote/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYyZmM1NDI4YThmMmNmZDdmNjZhZjhiIn0sImlhdCI6MTcxNDQwOTc1NH0.9snMRSVA276ZzvrUD4bOHOD4I1VNJ-9yVur75ZBLsh4",
+      },
+      body: JSON.stringify({ title, description, tag }),
+    });
+    const json = await res.json();
+    setnotes(notes.concat(json));
+  };
   return (
-    <NoteContext.Provider value={{ notes, setnotes }}>
+    <NoteContext.Provider
+      value={{ notes, setnotes, addNote, deleteNote, editNote, getNotes }}
+    >
       {props.children}
     </NoteContext.Provider>
   );
