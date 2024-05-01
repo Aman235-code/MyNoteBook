@@ -12,7 +12,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
       <div className="container-fluid">
         <NavLink className="navbar-brand" to="/">
           MyNoteBook
@@ -39,16 +39,6 @@ const Navbar = () => {
                 to="/"
               >
                 Home
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                className={`nav-link ${
-                  location.pathname === "/about" ? " active" : ""
-                }`}
-                to="/about"
-              >
-                About
               </NavLink>
             </li>
           </ul>
