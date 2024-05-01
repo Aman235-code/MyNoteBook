@@ -12,8 +12,7 @@ const NoteState = (props) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYyZmM1NDI4YThmMmNmZDdmNjZhZjhiIn0sImlhdCI6MTcxNDQwOTc1NH0.9snMRSVA276ZzvrUD4bOHOD4I1VNJ-9yVur75ZBLsh4",
+        "auth-token": localStorage.getItem("token"),
       },
     });
     const json = await res.json();
@@ -26,8 +25,7 @@ const NoteState = (props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYyZmM1NDI4YThmMmNmZDdmNjZhZjhiIn0sImlhdCI6MTcxNDQwOTc1NH0.9snMRSVA276ZzvrUD4bOHOD4I1VNJ-9yVur75ZBLsh4",
+        "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({ title, description, tag }),
     });
@@ -41,12 +39,14 @@ const NoteState = (props) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYyZmM1NDI4YThmMmNmZDdmNjZhZjhiIn0sImlhdCI6MTcxNDQwOTc1NH0.9snMRSVA276ZzvrUD4bOHOD4I1VNJ-9yVur75ZBLsh4",
+        "auth-token": localStorage.getItem("token"),
       },
     });
     const json = await res.json();
-    setnotes(notes.concat(json));
+    const newNotes = notes.filter((note) => {
+      return note._id !== id;
+    });
+    setnotes(newNotes);
   };
 
   // Edit a Note
@@ -55,13 +55,22 @@ const NoteState = (props) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYyZmM1NDI4YThmMmNmZDdmNjZhZjhiIn0sImlhdCI6MTcxNDQwOTc1NH0.9snMRSVA276ZzvrUD4bOHOD4I1VNJ-9yVur75ZBLsh4",
+        "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({ title, description, tag }),
     });
     const json = await res.json();
-    setnotes(notes.concat(json));
+    let newNotes = JSON.parse(JSON.stringify(notes));
+    for (let i = 0; i < notes.length; i++) {
+      const elem = newNotes[i];
+      if (elem._id == id) {
+        newNotes[i].title = title;
+        newNotes[i].description = description;
+        newNotes[i].tag = tag;
+        break;
+      }
+    }
+    setnotes(newNotes);
   };
   return (
     <NoteContext.Provider

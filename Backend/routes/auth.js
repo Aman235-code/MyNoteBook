@@ -29,7 +29,7 @@ router.post("/createuser", async (req, res) => {
     };
     const authToken = jwt.sign(data, JWT_SECRET);
 
-    res.json({ authToken });
+    res.json({ success: true, authToken: authToken });
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Error occured");
@@ -59,7 +59,7 @@ router.post("/loginuser", async (req, res) => {
     };
 
     const authToken = jwt.sign(data, JWT_SECRET);
-    res.json({ authToken });
+    res.json({ success: true, authToken: authToken });
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Error occured");
